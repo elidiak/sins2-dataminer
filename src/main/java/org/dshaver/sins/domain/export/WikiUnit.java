@@ -60,16 +60,20 @@ public class WikiUnit implements Priced {
             
             Double startHull = unit.getHealth().getLevels().get(0).getMaxHullPoints();
             Double endHull = unit.getHealth().getLevels().get(9).getMaxHullPoints();
-            this.hull = FMT."%.0f\{startHull} - %.0f\{endHull} (+%.0f\{(endHull - startHull)/9}/lvl)"; 
+            this.hull = FMT."%.0f\{startHull} - %.0f\{endHull} (+%.0f\{(endHull - startHull)/9}/lvl)";
+            
+            Double startArmorStr = unit.getHealth().getLevels().get(0).getArmorStrength();
+            Double endArmorStr = unit.getHealth().getLevels().get(9).getArmorStrength();
+            this.armorstr = FMT."%.0f\{startArmorStr} - %.0f\{endArmorStr} (+%.0f\{(endArmorStr - startArmorStr)/9}/lvl)"; 
 
         }
         else { 
             this.shield = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxShieldPoints()}";
             this.armor = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxArmorPoints()}";
-            this.hull = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxHullPoints()}"; 
+            this.hull = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxHullPoints()}";
+            this.armorstr = FMT."%.0f\{unit.getHealth().getLevels().get(0).getArmorStrength()}"; 
         }
         
-        this.armorstr = FMT."%.0f\{unit.getHealth().getLevels().get(0).getArmorStrength()}";
         this.description = unit.getDescription();
 
         if (unit.getWeapons() != null) {

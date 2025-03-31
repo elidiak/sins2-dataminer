@@ -16,6 +16,7 @@ public class WikiWeapon {
     String cooldownDuration;
     String travelSpeed;
     String range;
+    int count;
 
     public WikiWeapon(Weapon gameFileWeapon) {
         this.name = gameFileWeapon.getName();
@@ -27,5 +28,8 @@ public class WikiWeapon {
         this.cooldownDuration = FMT."%.0f\{gameFileWeapon.getCooldownDuration()}";
         this.travelSpeed = FMT."%.0f\{gameFileWeapon.getTravelSpeed()}";
         this.range = FMT."%.0f\{gameFileWeapon.getRange()}";
+        this.count = gameFileWeapon.getCount();
     }
+
+
 }

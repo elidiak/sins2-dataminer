@@ -82,6 +82,7 @@ public class UnitService {
             Weapon weapon = unit.getWeapons().getWeapons().get(i);
             Set<String> finishedIds = aggregatedWeapons.stream().map(Weapon::getWeapon).collect(Collectors.toSet());
             if (finishedIds.contains(weapon.getWeapon())) {
+                //aggregatedWeapons.get(weapon).add(weapon);
                 continue;
             }
 
