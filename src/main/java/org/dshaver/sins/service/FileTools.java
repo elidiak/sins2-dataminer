@@ -261,9 +261,22 @@ public class FileTools {
     }
 
     public static Map<String, WikiPlanetItem> getAllWikiPlanetUpgrades(Collection<UnitItem> unitItems) {
-        return unitItems.stream()
-                .map(WikiPlanetItem::new)
-                .collect(Collectors.toMap(FileTools::planetUpgradeKeyMapper, Function.identity()));
+        Map<String, WikiPlanetItem> allUnitItemMap = new HashMap<>();
+        Map<String, Integer> keyCounterMap = new HashMap<>();
+
+        for (UnitItem unitItem : unitItems) {
+            WikiPlanetItem wikiPlanetItem = new WikiPlanetItem(unitItem);
+            String baseKey = planetUpgradeKeyMapper(wikiPlanetItem);
+
+            // If the key already exists, append a counter to make it unique
+            int counter = keyCounterMap.getOrDefault(baseKey, 0);
+            String uniqueKey = counter == 0 ? baseKey : baseKey + "_" + counter;
+
+            // Increment the counter and store it
+            keyCounterMap.put(baseKey, counter + 1);
+            allUnitItemMap.put(uniqueKey, wikiPlanetItem);
+        }
+        return allUnitItemMap;
     }
 
     private static String planetUpgradeKeyMapper(WikiPlanetItem wikiPlanetItem) {
