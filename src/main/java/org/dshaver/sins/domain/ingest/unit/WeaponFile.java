@@ -1,10 +1,13 @@
 package org.dshaver.sins.domain.ingest.unit;
 
+import org.dshaver.sins.domain.ingest.unit.WeaponFile.Firing;
+
 import lombok.Data;
 
 @Data
 public class WeaponFile {
     String name;
+    String requiredUnitItem;
     String weaponType;
     double range;
     double cooldownDuration;

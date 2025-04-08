@@ -69,11 +69,14 @@ public class UnitService {
         for (String weaponId : weaponIds) {
             weaponMap.put(weaponId, FileTools.readWeaponFile(steamDir, weaponId));
         }
-
+        
         unit.getWeapons().getWeapons().forEach(weapon -> {
             WeaponFile weaponFile = weaponMap.get(weapon.getWeapon());
             String weaponName = gameFileService.getLocalizedTextForKey(weaponFile.getName());
-            weapon.fromWeaponFile(weaponMap.get(weapon.getWeapon()), weaponName);
+            if (weapon.getRequiredUnitItem() != null) {
+                weaponFile.setRequiredUnitItem( gameFileService.getLocalizedTextForKey( weapon.getRequiredUnitItem() + "_unit_item_name" ) ) ;
+            }
+            weapon.fromWeaponFile(weaponFile, weaponName);
         });
 
         List<Weapon> aggregatedWeapons = new ArrayList<>();

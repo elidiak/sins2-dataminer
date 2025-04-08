@@ -8,6 +8,7 @@ import static java.util.FormatProcessor.FMT;
 @Data
 public class WikiWeapon {
     String name;
+    String requiredUnitItem;
     String weaponType;
     String dps;
     String damage;
@@ -20,6 +21,7 @@ public class WikiWeapon {
 
     public WikiWeapon(Weapon gameFileWeapon) {
         this.name = gameFileWeapon.getName();
+        this.requiredUnitItem = gameFileWeapon.getRequiredUnitItem();
         this.weaponType = gameFileWeapon.getWeaponType();
         this.dps = FMT."%.1f\{gameFileWeapon.getDps()}";
         this.damage = FMT."%.0f\{gameFileWeapon.getDamage()}";

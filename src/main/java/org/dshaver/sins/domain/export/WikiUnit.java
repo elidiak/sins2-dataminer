@@ -29,6 +29,7 @@ public class WikiUnit implements Priced {
     String armor;
     String hull;
     String armorstr;
+    String carrierCapacity;
     String description;
     List<WikiWeapon> weapons;
 
@@ -67,7 +68,7 @@ public class WikiUnit implements Priced {
             this.armorstr = FMT."%.0f\{startArmorStr} - %.0f\{endArmorStr} (+%.0f\{(endArmorStr - startArmorStr)/9}/lvl)"; 
 
         }
-        else { 
+        else {
             this.shield = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxShieldPoints()}";
             this.armor = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxArmorPoints()}";
             this.hull = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxHullPoints()}";
@@ -81,5 +82,17 @@ public class WikiUnit implements Priced {
                     .map(WikiWeapon::new)
                     .toList();
         }
+        
+        if (unit.getCarrier() != null) {
+            // if (unit.getLevels().size() > 1) {
+            //     double startCarrierCapacity = unit.getLevels().get(0).getUnitModifiers().getAdditiveValues().getMaxSquadronCapacity();
+            //     double endCarrierCapacity = unit.getLevels().get(9).getUnitModifiers().getAdditiveValues().getMaxSquadronCapacity();
+            //     this.carrierCapacity = FMT."%.0f\{startCarrierCapacity} - %.0f\{endCarrierCapacity}";
+            // }
+            // else{this.carrierCapacity = FMT."%.0f\{unit.getCarrier().getBaseMaxSquadronCapacity()}";}
+
+            this.carrierCapacity = FMT."%.0f\{unit.getCarrier().getBaseMaxSquadronCapacity()}" ;
+        }
+
     }
 }

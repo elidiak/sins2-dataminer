@@ -12,6 +12,7 @@ public class Weapon {
     String weapon;
     String name;
     String weaponType;
+    String requiredUnitItem;
     double damage;
     double bombingDamage;
     double penetration;
@@ -22,6 +23,7 @@ public class Weapon {
 
     public void fromWeaponFile(WeaponFile weaponFile, String name) {
         this.name = name;
+        this.requiredUnitItem = weaponFile.getRequiredUnitItem();
         this.weaponType = weaponFile.getWeaponType();
         this.damage = weaponFile.getDamage();
         this.bombingDamage = weaponFile.getBombingDamage();

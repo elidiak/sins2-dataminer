@@ -9,4 +9,9 @@ public class Level {
     double maxArmorPoints;
     double maxHullPoints;
     double armorStrength;
+
+    // ShieldBurstRestore shieldBurstRestore;
+
+    // UnitModifiers unitModifiers;
+    // WeaponModifiers weaponModifiers;
 }
