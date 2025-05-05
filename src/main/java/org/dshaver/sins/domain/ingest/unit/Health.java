@@ -8,5 +8,6 @@ import java.util.List;
 public class Health {
     double durability;
     List<Level> levels;
-    // Antimatter antimatter;
+    Antimatter antimatter;
+    ShieldBurstRestore shieldBurstRestore;
 }

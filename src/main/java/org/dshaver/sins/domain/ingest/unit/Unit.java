@@ -35,9 +35,11 @@ public class Unit {
     Health health;
     Carrier carrier;
     Antimatter antimatter;
-//    List <Level> levels;
+    Level2 levels;
     Build build;
     Structure structure;
+    
+    Strikecraft strikecraft;
 
 
     public Double getModifiedSpeed() {

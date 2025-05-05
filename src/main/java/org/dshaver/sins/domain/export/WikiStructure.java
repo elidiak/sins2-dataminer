@@ -26,6 +26,7 @@ public class WikiStructure implements Priced {
     String armor;
     String hull;
     String armorstr;
+    String carrierCapacity;
     String description;
     List<WikiWeapon> weapons;
     String civilianslots;
@@ -50,6 +51,11 @@ public class WikiStructure implements Priced {
         this.hull = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxHullPoints()}";
         this.armorstr = FMT."%.0f\{unit.getHealth().getLevels().get(0).getArmorStrength()}";
         this.description = unit.getDescription();
+        
+        // Get Carrier capacity
+        if(unit.getCarrier() != null){
+            this.carrierCapacity = FMT."\{unit.getCarrier().getBaseMaxSquadronCapacity()}";
+        }
 
         if (unit.getWeapons() != null) {
             this.weapons = unit.getWeapons().getWeapons().stream()

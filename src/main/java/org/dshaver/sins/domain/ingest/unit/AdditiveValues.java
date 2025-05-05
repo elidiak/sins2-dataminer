@@ -6,7 +6,7 @@ import lombok.Data;
 public class AdditiveValues {
     double maxAntimatter;
     double antimatterRestoreRate;
-    double maxSquadronCapacity;
+    int maxSquadronCapacity;
 
     
 }
