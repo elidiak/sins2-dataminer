@@ -12,6 +12,13 @@ public class PlanetModifier {
     private static final String MINING_TRACK_CRYSTAL_INCOME_RATE = "mining_track_crystal_income_rate";
     private static final String CRYSTAL_EXTRACTION_RATE = "crystal_extraction_rate";
 
+
+    private static final String METAL_EXTRACTION_RATE_PER_POP = "metal_extraction_rate_per_population";
+    private static final String METAL_INCOME_RATE_PER_POPULATION = "mining_track_metal_income_rate_per_population";
+    private static final String CRYSTAL_INCOME_RATE_PER_POPULATION = "mining_track_crystal_income_rate_per_population";
+    private static final String CRYSTAL_EXTRACTION_RATE_PER_POP = "crystal_extraction_rate_per_population";
+    
+
     String name;
     String modifierType;
     ModifierBehavior valueBehavior;
@@ -55,6 +62,14 @@ public class PlanetModifier {
 
         if (MINING_TRACK_CRYSTAL_INCOME_RATE.equals(this.modifierType)) {
             return CRYSTAL_EXTRACTION_RATE;
+        }
+
+        if (METAL_INCOME_RATE_PER_POPULATION.equals(this.modifierType)) {
+            return METAL_EXTRACTION_RATE_PER_POP;
+        }
+
+        if (CRYSTAL_INCOME_RATE_PER_POPULATION.equals(this.modifierType)) {
+            return CRYSTAL_EXTRACTION_RATE_PER_POP;
         }
 
         return this.modifierType;
