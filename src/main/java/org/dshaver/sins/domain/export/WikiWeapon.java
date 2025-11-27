@@ -27,7 +27,7 @@ public class WikiWeapon {
         this.damage = FMT."%.0f\{gameFileWeapon.getDamage()}";
         this.bombingDamage = FMT."%.0f\{gameFileWeapon.getBombingDamage()}";
         this.penetration = FMT."%.0f\{gameFileWeapon.getPenetration()}";
-        this.cooldownDuration = FMT."%.0f\{gameFileWeapon.getCooldownDuration()}";
+        this.cooldownDuration = FMT."%.1f\{gameFileWeapon.getCooldownDuration()}";
         this.travelSpeed = FMT."%.0f\{gameFileWeapon.getTravelSpeed()}";
         this.range = FMT."%.0f\{gameFileWeapon.getRange()}";
         this.count = gameFileWeapon.getCount();

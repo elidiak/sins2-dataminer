@@ -46,6 +46,6 @@ public class Weapon {
     public double getDps() {
         var selectedDamage = "planet_bombing".equals(getWeaponType()) ? bombingDamage : damage;
 
-        return (60 / cooldownDuration) * selectedDamage / 60;
+        return selectedDamage / cooldownDuration ;
     }
 }
