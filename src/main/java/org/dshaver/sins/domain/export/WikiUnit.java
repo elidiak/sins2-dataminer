@@ -24,6 +24,9 @@ public class WikiUnit implements Priced {
     String buildtime;
     String supply;
     String speed;
+    String timeToMaxLinearSpeed;
+    String acceleration;
+    String maxAngularSpeed;
     String durability;
     String shield;
     String shieldRegen;
@@ -55,6 +58,8 @@ public class WikiUnit implements Priced {
         this.type = unit.getTargetFilterUnitType();
         this.durability = FMT."%.0f\{unit.getHealth().getDurability()}";
         this.speed = FMT."%.0f\{unit.getModifiedSpeed()}";
+        this.timeToMaxLinearSpeed = FMT."%.1f\{unit.getPhysics().getTimeToMaxLinearSpeed()}";
+        this.maxAngularSpeed = FMT."%.1f\{unit.getPhysics().getMaxAngularSpeed()}";
 
         if (unit.getBuild() != null) {
             setPrices(unit.getBuild().getPrice(), unit.getBuild().getExoticPrice());
@@ -117,8 +122,8 @@ public class WikiUnit implements Priced {
             this.hull = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxHullPoints()}";
             this.hullRegen = FMT. "%.1f\{unit.getHealth().getLevels().get(0).getHullPointRestoreRate()}";
             this.armorstr = FMT."%.0f\{unit.getHealth().getLevels().get(0).getArmorStrength()}";
-            this.antimatter = unit.getAntimatter() != null ? FMT."%.0f\{unit.getAntimatter().getMaxAntimatter()}" : "0";
-            this.antimatterRegen = unit.getAntimatter() != null ? FMT."%.0f\{unit.getAntimatter().getAntimatterRestoreRate()}" : "0";
+            this.antimatter = unit.getAntimatter() != null ? FMT."%.0f\{unit.getAntimatter().getMaxAntimatter()}" : null;
+            this.antimatterRegen = unit.getAntimatter() != null ? FMT."%.1f\{unit.getAntimatter().getAntimatterRestoreRate()}" : null;
 
             if (unit.getHealth().getLevels().get(0).getShieldBurstRestore() != null) {
                 this.shieldBurstCooldown = FMT."%.0f\{unit.getHealth().getLevels().get(0).getShieldBurstRestore().getCooldownDuration()}s";

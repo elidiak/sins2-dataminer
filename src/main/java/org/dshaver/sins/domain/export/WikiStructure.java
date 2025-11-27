@@ -23,10 +23,17 @@ public class WikiStructure implements Priced {
     String buildtime;
     String durability;
     String shield;
+    String shieldRegen;
+    String shieldBurstCooldown;
+    String shieldBurstAmount;
     String armor;
+    String armorRegen;
     String hull;
+    String hullRegen;
     String armorstr;
     String carrierCapacity;
+    String antimatter;
+    String antimatterRegen;
     String description;
     List<WikiWeapon> weapons;
     String civilianslots;
@@ -47,9 +54,20 @@ public class WikiStructure implements Priced {
         }
 
         this.shield = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxShieldPoints()}";
+        this.shieldRegen = FMT."%.1f\{unit.getHealth().getLevels().get(0).getShieldPointRestoreRate()}";
         this.armor = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxArmorPoints()}";
+        this.armorRegen = FMT. "%.1f\{unit.getHealth().getLevels().get(0).getArmorPointRestoreRate()}";
         this.hull = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxHullPoints()}";
+        this.hullRegen = FMT. "%.1f\{unit.getHealth().getLevels().get(0).getHullPointRestoreRate()}";
         this.armorstr = FMT."%.0f\{unit.getHealth().getLevels().get(0).getArmorStrength()}";
+        this.antimatter = unit.getAntimatter() != null ? FMT."%.0f\{unit.getAntimatter().getMaxAntimatter()}" : null;
+        this.antimatterRegen = unit.getAntimatter() != null ? FMT."%.1f\{unit.getAntimatter().getAntimatterRestoreRate()}" : null;
+
+        if (unit.getHealth().getLevels().get(0).getShieldBurstRestore() != null) {
+            this.shieldBurstCooldown = FMT."%.0f\{unit.getHealth().getLevels().get(0).getShieldBurstRestore().getCooldownDuration()}s";
+            this.shieldBurstAmount = FMT."%.0f\{unit.getHealth().getLevels().get(0).getShieldBurstRestore().getRestorePercentage() * 100}%%";
+        }
+
         this.description = unit.getDescription();
         
         // Get Carrier capacity
