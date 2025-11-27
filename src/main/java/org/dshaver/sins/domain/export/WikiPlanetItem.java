@@ -6,6 +6,7 @@ import org.dshaver.sins.RomanNumeral;
 import org.dshaver.sins.domain.ingest.unititem.EmpireModifier;
 import org.dshaver.sins.domain.ingest.unititem.PlanetModifier;
 import org.dshaver.sins.domain.ingest.unititem.UnitItem;
+import org.dshaver.sins.service.GameFileService;
 
 import java.util.List;
 import java.util.Optional;
@@ -38,15 +39,27 @@ public class WikiPlanetItem implements Priced {
 
     public WikiPlanetItem(UnitItem unitItem) {
         System.out.println(STR."Formatting planet item \{unitItem.getId()} for wiki");
-        this.id = unitItem.getId();
+        //this.id = unitItem.getId();  -- Workaround to make sure the name matches up with other sources.
         this.name = unitItem.getName();
         this.description = unitItem.getDescription();
         this.race = unitItem.getRace();
-        Optional.ofNullable(unitItem.getFaction()).ifPresent(faction -> this.setFaction(faction.getFactionName()));
+        this.id = this.race + ' ' + this.name;
+        //Optional.ofNullable(unitItem.getFaction()).ifPresent(faction -> this.setFaction(faction.getFactionName()));
         this.buildtime = FMT."%.0f\{unitItem.getBuildTime()}";
+        
         this.planettypes = unitItem.getPlanetTypeGroups().stream()
-                .flatMap(group -> group.getPlanetTypes().stream().map(StringUtils::capitalize))
-                .collect(Collectors.toList());
+        .flatMap(group -> group.getPlanetTypes().stream())
+        .collect(Collectors.toList());
+
+        GameFileService fick = new GameFileService("F:\\SteamLibrary\\steamapps\\common\\Sins2\\", "wiki\\");
+
+        for (int i = 0; i < this.planettypes.size(); i++) {
+            String planet = fick.getLocalizedText().get(this.planettypes.get(i).toString() + "_planet_name");
+            this.planettypes.set(i, planet.substring(0, 1) + planet.substring(1).toLowerCase());
+        }
+        
+        
+
 
         setPrices(unitItem.getPrice(), unitItem.getExoticPrice());
 
