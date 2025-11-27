@@ -41,7 +41,6 @@ public class Unit {
     
     Strikecraft strikecraft;
 
-
     public Double getModifiedSpeed() {
         if (physics != null) {
             return physics.getMaxLinearSpeed();
@@ -51,6 +50,9 @@ public class Unit {
     }
 
     public void findFaction() {
+        
+        id = id.replace("dlc_vasari", "vasari"); // work-around for mad-titan
+
         if (id.contains(Faction.advent_loyalist.name())) {
             this.faction = Faction.advent_loyalist;
         } else if (id.contains(Faction.advent_rebel.name())) {
