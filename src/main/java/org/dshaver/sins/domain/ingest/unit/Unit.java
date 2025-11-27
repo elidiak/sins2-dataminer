@@ -93,6 +93,13 @@ public class Unit {
         return String.join(", ", costs);
     }
 
+    public String getName() {
+        if (this.name != null){
+            return this.name;
+        }  
+        return this.id;
+    }
+
 
     private String buildWeaponTable() {
         if (getWeapons() == null) {
