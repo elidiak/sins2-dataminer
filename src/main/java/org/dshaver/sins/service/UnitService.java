@@ -77,6 +77,23 @@ public class UnitService {
                 weaponFile.setRequiredUnitItem( gameFileService.getLocalizedTextForKey( weapon.getRequiredUnitItem() + "_unit_item_name" ) ) ;
             }
             weapon.fromWeaponFile(weaponFile, weaponName);
+            if (weapon.getFiringType() != null && weapon.getFiringType().equals("spawn_torpedo")) {
+                String spawnedUnit = gameFileService.getLocalizedTextForKey( weapon.getSpawnedUnit() + "_name" );
+                String raceTag = weapon.getSpawnedUnit().split("_")[0];
+                raceTag = raceTag.substring(0, 1).toUpperCase() + raceTag.substring(1);
+
+                if (raceTag.equals("Trader")) raceTag = "TEC";
+
+                if (spawnedUnit == null){
+                    spawnedUnit = " ";
+                    String[] parts = weapon.getSpawnedUnit().split("_");
+                    for (int i = 1 ; i < parts.length; i++){
+                         String  part = parts[i];
+                        spawnedUnit += ' ' + part.substring(0, 1).toUpperCase() + part.substring(1);
+                    }
+                }
+                weapon.setSpawnedUnit(raceTag + " " + spawnedUnit.trim());
+            }
         });
 
         List<Weapon> aggregatedWeapons = new ArrayList<>();

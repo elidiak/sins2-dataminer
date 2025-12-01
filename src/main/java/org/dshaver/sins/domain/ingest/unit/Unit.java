@@ -97,7 +97,15 @@ public class Unit {
         if (this.name != null){
             return this.name;
         }  
-        return this.id;
+        String[] string = this.id.split("_");
+        String idname = " ";
+
+        for (String i : string){
+            if( !i.equalsIgnoreCase(VASARI_ID_PREFIX) &&  !i.equalsIgnoreCase(ADVENT_ID_PREFIX) && !i.equalsIgnoreCase(TEC_ID_PREFIX) ){
+                idname += ' ' + i.substring(0, 1).toUpperCase() + i.substring(1);
+            }
+        }
+        return idname.trim();
     }
 
 

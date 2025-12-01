@@ -1,6 +1,7 @@
 package org.dshaver.sins.domain.ingest.unit;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.List;
 import lombok.Data;
 
 @JsonIgnoreProperties
@@ -13,6 +14,8 @@ public class Weapon {
     String name;
     String weaponType;
     String requiredUnitItem;
+    double burstCount;
+    double burstDuration;
     double damage;
     double bombingDamage;
     double penetration;
@@ -20,6 +23,11 @@ public class Weapon {
     double travelSpeed;
     double range;
     int count = 1;
+
+    String firingType;
+    String spawnedUnit;
+    double missileDuration;
+    double bypassShieldsChance;
 
     public void fromWeaponFile(WeaponFile weaponFile, String name) {
         this.name = name;
@@ -29,10 +37,27 @@ public class Weapon {
         this.bombingDamage = weaponFile.getBombingDamage();
         this.penetration = weaponFile.getPenetration();
         this.cooldownDuration = weaponFile.getCooldownDuration();
+
         if (weaponFile.getFiring() != null) {
             this.travelSpeed = weaponFile.getFiring().getTravelSpeed();
+            this.firingType = weaponFile.getFiring().getFiringType();
+            
+            if (this.firingType.equals("spawn_torpedo")) {
+                this.spawnedUnit = weaponFile.getFiring().getTorpedoFiringDefinition().getSpawnedUnit();
+                this.missileDuration = weaponFile.getFiring().getTorpedoFiringDefinition().getDuration();
+                this.bypassShieldsChance = weaponFile.getFiring().getTorpedoFiringDefinition().getBypassShieldsChance();
+            }
         }
         this.range = weaponFile.getRange();
+
+        if (weaponFile.getBurstPattern() != null) {
+            this.burstCount = weaponFile.getBurstPattern().size();
+            this.burstDuration = (double) weaponFile.getBurstPattern().get( (int) this.burstCount -1);
+        } 
+        else {
+            this.burstCount = 0;
+            this.burstDuration = 0;
+        }
     }
 
     public void add(Weapon identicalWeapon) {
@@ -48,4 +73,5 @@ public class Weapon {
 
         return selectedDamage / cooldownDuration ;
     }
+
 }

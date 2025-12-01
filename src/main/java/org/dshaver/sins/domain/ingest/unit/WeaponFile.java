@@ -1,6 +1,7 @@
 package org.dshaver.sins.domain.ingest.unit;
 
 import org.dshaver.sins.domain.ingest.unit.WeaponFile.Firing;
+import java.util.List;
 
 import lombok.Data;
 
@@ -14,6 +15,7 @@ public class WeaponFile {
     double damage;
     double bombingDamage;
     double penetration;
+    List burstPattern;
     Firing firing;
 
     @Data
@@ -21,5 +23,14 @@ public class WeaponFile {
         String firingType;
         double travelSpeed;
         double chargeDuration;
+        TorpedoDef torpedoFiringDefinition;
+    }
+
+    @Data
+    public static class TorpedoDef {
+        String spawnedUnit;
+        double duration;
+        double bypassShieldsChance;
     }
 }
+
