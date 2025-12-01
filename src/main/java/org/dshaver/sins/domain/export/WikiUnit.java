@@ -59,6 +59,7 @@ public class WikiUnit implements Priced {
         this.durability = FMT."%.0f\{unit.getHealth().getDurability()}";
         this.speed = FMT."%.0f\{unit.getModifiedSpeed()}";
         this.timeToMaxLinearSpeed = FMT."%.1f\{unit.getPhysics().getTimeToMaxLinearSpeed()}";
+        this.acceleration = FMT."%.1f\{unit.getModifiedSpeed()/unit.getPhysics().getTimeToMaxLinearSpeed()}";
         this.maxAngularSpeed = FMT."%.1f\{unit.getPhysics().getMaxAngularSpeed()}";
 
         if (unit.getBuild() != null) {
