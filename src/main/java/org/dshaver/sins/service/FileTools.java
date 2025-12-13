@@ -207,7 +207,7 @@ public class FileTools {
 
     public static Map<String, WikiUnit> getAllWikiUnits(Collection<Unit> units) {
         return units.stream()
-                .filter(unit -> unit.getUnitType().isShip())
+                .filter(unit -> (unit.getUnitType().isShip() || (unit.getTags() != null && unit.getTags().get(0).equals("frigate"))))
                 .map(WikiUnit::new)
                 .collect(Collectors.toMap(FileTools::unitKeyMapper, Function.identity()));
     }

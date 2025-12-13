@@ -29,6 +29,7 @@ public class Unit {
     Faction faction;
     String targetFilterUnitType;
     UnitType unitType;
+    List<String> tags;
 
     Weapons weapons;
     Physics physics;
