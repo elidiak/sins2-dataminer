@@ -207,6 +207,7 @@ public class FileTools {
 
     public static Map<String, WikiUnit> getAllWikiUnits(Collection<Unit> units) {
         return units.stream()
+                // Now has a condition so that untargetable units can be included if they act like ships
                 .filter(unit -> (unit.getUnitType().isShip() || (unit.getTags() != null && unit.getTags().get(0).equals("frigate"))))
                 .map(WikiUnit::new)
                 .collect(Collectors.toMap(FileTools::unitKeyMapper, Function.identity()));

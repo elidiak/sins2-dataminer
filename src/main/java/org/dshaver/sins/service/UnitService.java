@@ -36,6 +36,7 @@ public class UnitService {
         Map<String, Unit> unitIdMap = unitManifest.getIds().stream()
                 .map(id -> FileTools.readUnitFile(steamDir, id))
                 .filter(unit -> StringUtils.isNotBlank(unit.getTargetFilterUnitType()))
+                // Now has a condition so that untargetable units can be included if they act like ships
                 .filter(unit -> unit.getUnitType().isShip() || unit.getUnitType().isBuilding() || (unit.getTags() != null && unit.getTags().get(0).equals("frigate")))
                 .map(this::populateUnit)
                 .collect(Collectors.toMap(Unit::getId, Function.identity()));
