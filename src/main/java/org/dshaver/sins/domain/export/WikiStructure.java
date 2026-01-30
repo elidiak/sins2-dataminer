@@ -21,6 +21,7 @@ public class WikiStructure implements Priced {
     String kalanide = "";
     String quarnium = "";
     String buildtime;
+    String xp;
     String durability;
     String shield;
     String shieldRegen;
@@ -39,6 +40,11 @@ public class WikiStructure implements Priced {
     String civilianslots;
     String militaryslots;
 
+    String speed;
+    String timeToMaxLinearSpeed;
+    String acceleration;
+    String maxAngularSpeed;
+
     public WikiStructure(Unit unit) {
         System.out.println(STR."Creating WikiStructure for \{unit.getId()}");
         this.race = unit.getRace();
@@ -53,6 +59,14 @@ public class WikiStructure implements Priced {
             this.buildtime = FMT."%.0f\{unit.getBuild().getBuildTime()}";
         }
 
+        this.speed = unit.getModifiedSpeed() != null ? FMT."%.0f\{unit.getModifiedSpeed()}" : null;
+        if (unit.getPhysics() != null) {
+            this.timeToMaxLinearSpeed = unit.getPhysics().getTimeToMaxLinearSpeed() != 0.0 ? FMT."%.1f\{unit.getPhysics().getTimeToMaxLinearSpeed()}" : null;
+            this.acceleration = unit.getModifiedSpeed() != 0.0 && unit.getPhysics().getTimeToMaxLinearSpeed() != 0.0 ? FMT."%.1f\{unit.getModifiedSpeed()/unit.getPhysics().getTimeToMaxLinearSpeed()}" : null;
+            this.maxAngularSpeed = unit.getPhysics().getMaxAngularSpeed() != 0.0 ? FMT."%.1f\{unit.getPhysics().getMaxAngularSpeed()}" : null;
+        }
+
+        this.xp = FMT."%.0f\{unit.getHealth().getLevels().get(0).getExperienceGivenOnDeath()}";
         this.shield = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxShieldPoints()}";
         this.shieldRegen = FMT."%.1f\{unit.getHealth().getLevels().get(0).getShieldPointRestoreRate()}";
         this.armor = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxArmorPoints()}";

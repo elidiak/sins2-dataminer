@@ -13,6 +13,7 @@ public class Level {
     double hullPointRestoreRate;
     double shieldPointRestoreRate;
     double armorPointRestoreRate;
+    double experienceGivenOnDeath;
 
     ShieldBurstRestore shieldBurstRestore;
 

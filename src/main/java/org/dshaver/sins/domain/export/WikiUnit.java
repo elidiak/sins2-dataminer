@@ -23,6 +23,7 @@ public class WikiUnit implements Priced {
     String quarnium = "";
     String buildtime;
     String supply;
+    String xp;
     String speed;
     String timeToMaxLinearSpeed;
     String acceleration;
@@ -114,8 +115,13 @@ public class WikiUnit implements Priced {
             Double startAntimatterRegen = unit.getLevels().getLevels().get(0).getUnitModifiers().getAdditiveValues().getAntimatterRestoreRate();
             Double endAntimatterRegen = unit.getLevels().getLevels().get(9).getUnitModifiers().getAdditiveValues().getAntimatterRestoreRate();
             this.antimatterRegen = FMT."%.1f\{startAntimatterRegen} - %.1f\{endAntimatterRegen} (+%.1f\{(endAntimatterRegen - startAntimatterRegen)/9}/lvl)"; 
+
+            double startXP = unit.getHealth().getLevels().get(0).getExperienceGivenOnDeath();
+            double endXP = unit.getHealth().getLevels().get(9).getExperienceGivenOnDeath();
+            this.xp = FMT."%.0f\{startXP} - %.0f\{endXP}";
         }
         else {
+            this.xp = FMT."%.0f\{unit.getHealth().getLevels().get(0).getExperienceGivenOnDeath()}";
             this.shield = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxShieldPoints()}";
             this.shieldRegen = FMT."%.1f\{unit.getHealth().getLevels().get(0).getShieldPointRestoreRate()}";
             this.armor = FMT."%.0f\{unit.getHealth().getLevels().get(0).getMaxArmorPoints()}";
