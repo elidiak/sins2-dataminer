@@ -39,18 +39,4 @@ build/
 
 src/main/external-resources/
 wiki/
-src/main/java/org/dshaver/sins/domain/ingest/unit/Level.java
-src/main/java/org/dshaver/sins/domain/export/WikiUnit.java
-src/main/java/org/dshaver/sins/domain/export/WikiStructure.java
-.VSCodeCounter/2026-01-30_15-33-33/results.txt
-.VSCodeCounter/2026-01-30_15-33-33/results.md
-.VSCodeCounter/2026-01-30_15-33-33/results.json
-.VSCodeCounter/2026-01-30_15-33-33/results.csv
-.VSCodeCounter/2026-01-30_15-33-33/diff.txt
-.VSCodeCounter/2026-01-30_15-33-33/diff.md
-.VSCodeCounter/2026-01-30_15-33-33/diff.csv
-.VSCodeCounter/2026-01-30_15-33-33/diff-details.md
-.VSCodeCounter/2026-01-30_15-33-33/details.md
-src/main/java/org/dshaver/sins/domain/ingest/unit/Level.java
-src/main/java/org/dshaver/sins/domain/export/WikiUnit.java
-src/main/java/org/dshaver/sins/domain/export/WikiStructure.java
+.VSCodeCounter/
