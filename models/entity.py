@@ -1,8 +1,12 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 @dataclass
 class Entity:
+
+    # Basic fields
+
     name: str
-    raw: list[str]
-    # Add parsed fields as you port logic
+    abilities: list[Any] = field(default_factory=list)
+    buffs: list[Any] = field(default_factory=list)
+    raw: list[str] = field(default_factory=list)
