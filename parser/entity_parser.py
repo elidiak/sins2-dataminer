@@ -7,6 +7,7 @@ from ..models.entity import Entity
 from ..models.ability import Ability
 from ..models.buff import Buff
 from ..models.research import Research
+from ..models.faction import Faction
 
 
 
@@ -58,6 +59,11 @@ def parse_entity(path: Path) -> Entity:
                     for k, v in buffer.items():
                         research.set_field(k, v)
                     entity.research.append(research)
+            elif current_section == "faction":
+                faction = Faction()
+                for k, v in buffer.items():
+                    faction.set_field(k, v)
+                entity.factions.append(faction)
 
             current_section = None
             buffer = {}
