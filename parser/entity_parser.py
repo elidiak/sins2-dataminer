@@ -6,6 +6,8 @@ from typing import Any
 from ..models.entity import Entity
 from ..models.ability import Ability
 from ..models.buff import Buff
+from ..models.research import Research
+
 
 
 def parse_entity(path: Path) -> Entity:
@@ -51,6 +53,11 @@ def parse_entity(path: Path) -> Entity:
                     for k, v in buffer.items():
                         buff.set_field(k, v)
                     entity.buffs.append(buff)
+            elif current_section == "research":
+                    research = Research()
+                    for k, v in buffer.items():
+                        research.set_field(k, v)
+                    entity.research.append(research)
 
             current_section = None
             buffer = {}

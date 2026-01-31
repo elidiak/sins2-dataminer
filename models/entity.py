@@ -10,3 +10,4 @@ class Entity:
     abilities: list[Any] = field(default_factory=list)
     buffs: list[Any] = field(default_factory=list)
     raw: list[str] = field(default_factory=list)
+    research: list[Any] = field(default_factory=list)
