@@ -42,7 +42,10 @@ def parse_entity(path: Path) -> Entity:
 
         if stripped == "}":
             if current_section == "ability":
-                entity.abilities.append(Ability(**buffer))
+                    ability = Ability()
+                    for k, v in buffer.items():
+                        ability.set_field(k, v)
+                    entity.abilities.append(ability)
             elif current_section == "buff":
                 entity.buffs.append(Buff(**buffer))
             current_section = None
