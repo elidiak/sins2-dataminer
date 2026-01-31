@@ -47,7 +47,11 @@ def parse_entity(path: Path) -> Entity:
                         ability.set_field(k, v)
                     entity.abilities.append(ability)
             elif current_section == "buff":
-                entity.buffs.append(Buff(**buffer))
+                    buff = Buff()
+                    for k, v in buffer.items():
+                        buff.set_field(k, v)
+                    entity.buffs.append(buff)
+
             current_section = None
             buffer = {}
             continue
