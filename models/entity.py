@@ -20,6 +20,7 @@ class Entity:
     buffs: list[Any] = field(default_factory=list)
     research: list[Any] = field(default_factory=list)
     factions: list[Any] = field(default_factory=list)
+    modifiers: list[Any] = field(default_factory=list)
 
     # Raw file contents (for debugging or fallback parsing)
     raw: list[str] = field(default_factory=list)
