@@ -9,6 +9,7 @@ from ..models.buff import Buff
 from ..models.research import Research
 from ..models.faction import Faction
 from ..models.modifier import Modifier
+from ..models.effect import Effect
 
 
 
@@ -70,6 +71,11 @@ def parse_entity(path: Path) -> Entity:
                 for k, v in buffer.items():
                     modifier.set_field(k, v)
                 entity.modifiers.append(modifier)
+            elif current_section == "effect":
+                effect = Effect()
+                for k, v in buffer.items():
+                        effect.set_field(k, v)
+                entity.effects.append(effect)
             current_section = None
             buffer = {}
             continue
