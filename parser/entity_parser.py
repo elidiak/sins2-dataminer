@@ -1,100 +1,139 @@
-# Import Pathlib and data classes
+from __future__ import annotations
 from pathlib import Path
-from dataclasses import dataclass, field
 from typing import Any
 
-from ..models.entity import Entity
-from ..models.ability import Ability
-from ..models.buff import Buff
-from ..models.research import Research
-from ..models.faction import Faction
-from ..models.modifier import Modifier
-from ..models.effect import Effect
 
+def parse_entity(path: Path) -> dict[str, Any]:
+    """
+    High-level entry point.
+    Returns a nested Python structure representing the .entity file.
+    """
+    text = path.read_text(encoding="utf-8")
+    tokens = tokenize(text)
+    parser = Parser(tokens)
+    return parser.parse_block()
 
+def tokenize(text: str) -> list[str]:
+    """
+    Produces a flat list of tokens:
+    identifiers, numbers, strings, {, }, =.
+    Comments and whitespace are removed.
+    """
+    tokens = []
+    current = []
 
-def parse_entity(path: Path) -> Entity:
-    # Parse an entity file and return an Entity object.
-    lines = path.read_text(encoding="utf-8").splitlines()
+    i = 0
+    while i < len(text):
+        c = text[i]
 
-    # Create and return the Entity object
-    entity = Entity(
-        name=path.stem,
-        abilities=[],
-        buffs=[],
-        raw=lines,
-    )
-
-    current_section = None
-    buffer = {}
-
-    for line in lines:
-        stripped = line.strip()
-
-        # Skip empty or comment lines
-
-        if not stripped or stripped.startswith("//"):
+        # Skip whitespace
+        if c.isspace():
+            if current:
+                tokens.append("".join(current))
+                current = []
+            i += 1
             continue
 
-       # Section start
-
-        if stripped.endswith("{"):
-            current_section = stripped[:-1].strip()
-            buffer = {}
+        # Comments
+        if text.startswith("//", i):
+            if current:
+                tokens.append("".join(current))
+                current = []
+            # skip to end of line
+            while i < len(text) and text[i] != "\n":
+                i += 1
             continue
 
-        # Section end
-
-        if stripped == "}":
-            if current_section == "ability":
-                    ability = Ability()
-                    for k, v in buffer.items():
-                        ability.set_field(k, v)
-                    entity.abilities.append(ability)
-            elif current_section == "buff":
-                    buff = Buff()
-                    for k, v in buffer.items():
-                        buff.set_field(k, v)
-                    entity.buffs.append(buff)
-            elif current_section == "research":
-                    research = Research()
-                    for k, v in buffer.items():
-                        research.set_field(k, v)
-                    entity.research.append(research)
-            elif current_section == "faction":
-                faction = Faction()
-                for k, v in buffer.items():
-                    faction.set_field(k, v)
-                entity.factions.append(faction)
-            elif current_section == "modifier":
-                modifier = Modifier()
-                for k, v in buffer.items():
-                    modifier.set_field(k, v)
-                entity.modifiers.append(modifier)
-            elif current_section == "effect":
-                effect = Effect()
-                for k, v in buffer.items():
-                        effect.set_field(k, v)
-                entity.effects.append(effect)
-            current_section = None
-            buffer = {}
+        # Braces and equals are standalone tokens
+        if c in "{}=":
+            if current:
+                tokens.append("".join(current))
+                current = []
+            tokens.append(c)
+            i += 1
             continue
 
-        # Key/value inside a section
+        # Quoted string
+        if c == '"':
+            if current:
+                tokens.append("".join(current))
+                current = []
+            i += 1
+            start = i
+            while i < len(text) and text[i] != '"':
+                i += 1
+            tokens.append(text[start:i])
+            i += 1
+            continue
 
-        if current_section and "=" in stripped:
-            key, value = stripped.split("=", 1)
-            buffer[key.strip()] = parse_value(value.strip())
+        # Otherwise accumulate characters
+        current.append(c)
+        i += 1
 
-    return Entity(name=path.stem, raw=lines)
+    if current:
+        tokens.append("".join(current))
 
-def parse_value(value: str) -> Any:
-    
-    # Try to convert numbers
-    
-    try:
-        if "." in value:
-            return float(value)
-        return int(value)
-    except ValueError:
-        return value.strip('"')
+    return tokens
+class Parser:
+    def __init__(self, tokens: list[str]):
+        self.tokens = tokens
+        self.pos = 0
+
+    def peek(self) -> str | None:
+        return self.tokens[self.pos] if self.pos < len(self.tokens) else None
+
+    def consume(self, expected: str | None = None) -> str:
+        tok = self.peek()
+        if tok is None:
+            raise ValueError("Unexpected end of input")
+        if expected and tok != expected:
+            raise ValueError(f"Expected '{expected}', got '{tok}'")
+        self.pos += 1
+        return tok
+
+    def parse_block(self) -> dict[str, Any]:
+        """
+        Parses a block of key/value pairs and nested blocks:
+        key = value
+        key { ... }
+        """
+        result: dict[str, Any] = {}
+
+        while self.peek() not in (None, "}"):
+            key = self.consume()
+
+            # key = value
+            if self.peek() == "=":
+                self.consume("=")
+                value = self.parse_value()
+                result[key] = value
+                continue
+
+            # key { block }
+            if self.peek() == "{":
+                self.consume("{")
+                block = self.parse_block()
+                self.consume("}")
+
+                # If multiple blocks share the same key → list
+                if key in result:
+                    if not isinstance(result[key], list):
+                        result[key] = [result[key]]
+                    result[key].append(block)
+                else:
+                    result[key] = block
+                continue
+
+            raise ValueError(f"Unexpected token after key '{key}': {self.peek()}")
+
+        return result
+
+    def parse_value(self) -> Any:
+        tok = self.consume()
+
+        # Try number
+        if tok.replace(".", "", 1).isdigit():
+            return float(tok) if "." in tok else int(tok)
+
+        # Strings are already unquoted by tokenizer
+        return tok
