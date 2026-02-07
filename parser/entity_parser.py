@@ -1,17 +1,15 @@
 from __future__ import annotations
 from pathlib import Path
 from typing import Any
+from .model_builder import build_entity
+from ..models.entity import Entity
 
-
-def parse_entity(path: Path) -> dict[str, Any]:
-    """
-    High-level entry point.
-    Returns a nested Python structure representing the .entity file.
-    """
+def parse_entity(path: Path) -> Entity:
     text = path.read_text(encoding="utf-8")
     tokens = tokenize(text)
     parser = Parser(tokens)
-    return parser.parse_block()
+    struct = parser.parse_block()
+    return build_entity(struct, name=path.stem)
 
 def tokenize(text: str) -> list[str]:
     """
