@@ -1,6 +1,6 @@
-from sins2_dataminer.parser.model_builder import build_entity
-from sins2_dataminer.models.ability import Ability
-from sins2_dataminer.models.entity import Entity
+from ..parser.model_builder import build_entity
+from ..models.ability import Ability
+from ..models.entity import Entity
 
 def test_build_entity_simple_fields():
     struct = {"hull": 1200, "name": "Frigate"}

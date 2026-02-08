@@ -1,4 +1,4 @@
-from sins2_dataminer.parser.tokenizer import tokenize
+from ..parser.tokenizer import tokenize
 
 def test_tokenizer_basic():
     text = 'name = "Frigate"'

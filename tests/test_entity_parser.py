@@ -1,6 +1,6 @@
 from pathlib import Path
-from sins2_dataminer.parser.entity_parser import parse_entity
-from sins2_dataminer.models.entity import Entity
+from ..parser.entity_parser import parse_entity
+from ..models.entity import Entity
 
 def test_full_entity_parse(tmp_path: Path):
     content = """

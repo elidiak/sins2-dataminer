@@ -1,7 +1,7 @@
-from sins2_dataminer.parser.parser_core import Parser
+from ..parser.parser_core import Parser
 
 def parse(text: str):
-    from sins2_dataminer.parser.tokenizer import tokenize
+    from ..parser.tokenizer import tokenize
     tokens = tokenize(text)
     return Parser(tokens).parse_block()
 
