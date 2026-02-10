@@ -41,8 +41,8 @@ class Parser:
                 else:
                     result[key] = block
                 continue
-
-            raise ValueError(f"Unexpected token after key '{key}': {self.peek()}")
+            
+            #raise ValueError(f"Unexpected token after key '{key}': {self.peek()}")
 
         return result
 
