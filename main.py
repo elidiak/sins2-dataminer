@@ -14,9 +14,9 @@ def main():
     if not steamdir.exists():
         raise FileNotFoundError(f"Steam directory '{steamdir}' does not exist.")
     
-    data = scan_install_dir(args.steamdir)
+    data = scan_install_dir(steamdir)
 
-    write_json(data, args.output)
+    write_json(data, outdir)
 
 if __name__ == "__main__":
     main()
