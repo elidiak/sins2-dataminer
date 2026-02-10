@@ -16,7 +16,7 @@ def scan_install_dir(steamdir: Path) -> dict[str, Any]:
     localization = {}
 
     # Parse all .entity files
-    for path in steamdir.rglob("*.entity"):
+    for path in steamdir.rglob("entities\\*"):
         try:
             entity = parse_entity(path)
             entities.append(entity)
