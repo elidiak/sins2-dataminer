@@ -40,3 +40,4 @@ build/
 src/main/external-resources/
 wiki/
 .VSCodeCounter/
+*.pyc
